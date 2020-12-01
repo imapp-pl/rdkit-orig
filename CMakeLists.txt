@@ -585,6 +585,7 @@ SET(CPACK_PACKAGE_VERSION_MAJOR ${RDKit_Year})
 SET(CPACK_PACKAGE_VERSION_MINOR ${RDKit_Month})
 SET(CPACK_PACKAGE_VERSION_PATCH ${RDKit_Revision}${RDKit_RevisionModifier})
 SET(CPACK_PACKAGE_INSTALL_DIRECTORY "CMake ${CMake_VERSION_MAJOR}.${CMake_VERSION_MINOR}")
+SET(CPACK_DEBIAN_PYTHON_PACKAGE_DEPENDS "libboost-python-dev (>= 1.58), libboost-serialization-dev (>= 1.58), libboost-system-dev (>= 1.58), libboost-iostreams-dev (>= 1.58), python3 (>= 3.7.3-1), libpython3-all-dev (>= 3.7.3-1)")
 #IF(WIN32 AND NOT UNIX)
 #  # There is a bug in NSI that does not handle full unix paths properly. Make
 #  # sure there is at least one set of four (4) backlasshes.

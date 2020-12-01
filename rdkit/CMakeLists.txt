@@ -12,6 +12,12 @@ RDContribDir=os.path.join(_share,'Contrib')
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/RDPaths.py 
   DESTINATION ${RDKit_PythonDir}
   COMPONENT python)
+ 
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ 
+  DESTINATION ${RDKit_PythonDir}
+  COMPONENT python 
+  FILES_MATCHING PATTERN ${CMAKE_CURRENT_BINARY_DIR}/RDPaths.py EXCLUDE 
+  PATTERN "**/*.py")
 
 add_pytest(pythonTestDirML
          ${CMAKE_CURRENT_SOURCE_DIR}/ML/test_list.py --testDir ${CMAKE_CURRENT_SOURCE_DIR}/ML )
