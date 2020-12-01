@@ -36,7 +36,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     libpython3-all-dev \
     libboost-all-dev \
     zlib1g-dev \
-    libfreetype6-dev \
   && rm -rf /var/lib/apt/lists/*
 
 # Set up python 3.7 as default, 2.7 as an alternative
