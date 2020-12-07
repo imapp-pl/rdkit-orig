@@ -10,3 +10,6 @@ ADD https://github.com/imapp-pl/rdkit-orig/releases/download/Release_2020_03-deb
 RUN apt-get update && apt-get --no-install-recommends install -y python3-pip ./RDKit-2020.03.6-Linux-Runtime.deb ./RDKit-2020.03.6-Linux-Python.deb 
 RUN pip3 install numpy
 RUN apt-get remove -y python3-pip && apt-get -y autoremove && apt-get -y autoclean && rm -rf /var/lib/apt/lists/*
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7 2
+RUN update-alternatives  --set python /usr/bin/python3.7
