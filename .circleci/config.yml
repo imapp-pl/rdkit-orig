@@ -46,17 +46,17 @@ commands:
   package:
     description: "Make Packages"
     steps:
-      - run:
+    - run:
           name: "Build Packages"
           working_directory: ~/project/build
           command: cpack -G "TGZ;DEB"
-      - run:
-          name: "Move Packages"
-          working_directory: ~/package
-          command: mv ~/project/build/RDKit-* .
-      - store_artifacts:
-          path: ~/package
-          destination: package
+    - run:
+        name: "Move Packages"
+        working_directory: ~/package
+        command: mv ~/project/build/RDKit-* .
+    - store_artifacts:
+        path: ~/package
+        destination: package
 
 jobs:
   linux:
@@ -68,9 +68,32 @@ jobs:
       - build
       - test
       - package
+      - persist_to_workspace:
+          root: ~/package
+          paths:
+            - RDKit-*
+
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: package
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            ls -all .. && ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete Release_2020_03-debs package
 
 workflows:
   version: 2
   rdkit:
     jobs:
       - linux
+      - publish-github-release:
+          requires:
+            - linux
+          # filters:
+          #   branches:
+          #     ignore: /.*/
+          #   tags:
+          #     only: /^\d+\.\d+\.\d+$/

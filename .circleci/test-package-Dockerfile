@@ -1,0 +1,12 @@
+FROM debian:10.3-slim
+
+LABEL maintainer="imapp"
+LABEL version="1.2"
+LABEL description="RDKIT package testing"
+
+ADD https://github.com/imapp-pl/rdkit-orig/releases/download/Release_2020_03-debs/RDKit-2020.03.6-Linux-Runtime.deb .
+ADD https://github.com/imapp-pl/rdkit-orig/releases/download/Release_2020_03-debs/RDKit-2020.03.6-Linux-Python.deb .
+
+RUN apt-get update && apt-get --no-install-recommends install -y python3-pip ./RDKit-2020.03.6-Linux-Runtime.deb ./RDKit-2020.03.6-Linux-Python.deb 
+RUN pip3 install numpy
+RUN apt-get remove -y python3-pip && apt-get -y autoremove && apt-get -y autoclean && rm -rf /var/lib/apt/lists/*
